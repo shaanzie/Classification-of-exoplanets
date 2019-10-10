@@ -5,9 +5,10 @@ import math
 def loadCsv(filename):
     lines = pd.read_csv('new_data_numeric.csv')
     dataset = list(lines)
+    print(dataset)
     for i in range(len(dataset)):
-        dataset[i] = [1.0 for x in dataset[i]] 
-        # print(dataset[i])
+        dataset[i] = [float(x) for x in dataset[i]] 
+        print(dataset[i])
     return dataset
 
 def splitDataset(dataset, splitRatio):
