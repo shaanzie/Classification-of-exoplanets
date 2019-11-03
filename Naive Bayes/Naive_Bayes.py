@@ -4,10 +4,11 @@ import math
 
 def loadCsv(filename):
     lines = pd.read_csv('new_data_numeric.csv')
+	# lines.drop([''])
     dataset = list(lines)
     print(dataset)
     for i in range(len(dataset)):
-        dataset[i] = [float(x) for x in dataset[i]] 
+        dataset[i] = [float(x) for x in dataset] 
         print(dataset[i])
     return dataset
 
