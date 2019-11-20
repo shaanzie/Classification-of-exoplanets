@@ -2,7 +2,7 @@ import pandas as pd
 import random
 import math
 
-def loadCsv(filename):
+def load_csv_file(filename):
     lines = pd.read_csv('new_data_numeric.csv')
 	# lines.drop([''])
     dataset = list(lines)
@@ -12,7 +12,7 @@ def loadCsv(filename):
         print(dataset[i])
     return dataset
 
-def splitDataset(dataset, splitRatio):
+def data_split(dataset, splitRatio):
 	trainSize = int(len(dataset) * splitRatio)
 	trainSet = []
 	copy = list(dataset)
@@ -21,7 +21,7 @@ def splitDataset(dataset, splitRatio):
 		trainSet.append(copy.pop(index))
 	return [trainSet, copy]
 
-def separateByClass(dataset):
+def sep_class(dataset):
 	separated = {}
 	for i in range(len(dataset)):
 		vector = dataset[i]
@@ -43,8 +43,8 @@ def summarize(dataset):
 	del summaries[-1]
 	return summaries
 
-def summarizeByClass(dataset):
-	separated = separateByClass(dataset)
+def sum_class(dataset):
+	separated = sep_class(dataset)
 	summaries = {}
 	for classValue, instances in separated.items():
 		summaries[classValue] = summarize(instances)
@@ -91,15 +91,11 @@ def getAccuracy(testSet, predictions):
 			correct += 1
 	return (correct/float(len(testSet))) * 100.0
 
-def main():
-	filename = 'new_data_numeric.csv'
-	splitRatio = 0.70
-	dataset = loadCsv(filename)
-	trainingSet, testSet = splitDataset(dataset, splitRatio)
-	print('Split', len(dataset),'rows into train=',len(trainingSet),' and test=',len(testSet),' rows')
-	summaries = summarizeByClass(trainingSet)
-	predictions = getPredictions(summaries, testSet)
-	accuracy = getAccuracy(testSet, predictions)
-	print('Accuracy: ',accuracy,'%')
-
-main()
+filename = 'new_data_numeric.csv'
+splitRatio = 0.80
+dataset = load_csv_file(filename)
+trainingSet, testSet = data_split(dataset, splitRatio)
+summaries = sum_class(trainingSet)
+predictions = getPredictions(summaries, testSet)
+accuracy = getAccuracy(testSet, predictions)
+print('Accuracy: ', accuracy)
